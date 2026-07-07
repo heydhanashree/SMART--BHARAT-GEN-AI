@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="tiranga">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Bharat – AI-Powered Civic Companion. Access government services, report issues, and get assistance in Hindi, Marathi & English." />
+  <meta name="keywords" content="Smart Bharat, government services, AI civic, India, Gemini, Hindi, Marathi" />
+  <meta property="og:title" content="Smart Bharat – AI Civic Companion" />
+  <meta property="og:description" content="Your AI-powered guide to government services and civic engagement" />
+  <title>Smart Bharat – AI Civic Companion | स्मार्ट भारत</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     SERVICE DETAIL MODAL
+════════════════════════════════════════════════ -->
+<div id="svc-modal" class="overlay" style="display:none" onclick="if(event.target===this)closeSvcModal()">
+  <div class="svc-modal-card glass-card">
+    <button class="x-btn" onclick="closeSvcModal()">✕</button>
+    <div id="svc-modal-body"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TOAST
+════════════════════════════════════════════════ -->
+<div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+<!-- ════════════════════════════════════════════════
+     MAIN APP
+════════════════════════════════════════════════ -->
+<div id="main-app">
+
+  <!-- ── HEADER ── -->
+  <header class="header" id="app-header">
+    <div class="hd-logo" onclick="showSection('home')" tabindex="0" role="button" aria-label="Home">
+      <span class="hd-flag">🇮🇳</span>
+      <div>
+        <span class="hd-name">Smart Bharat</span>
+        <span class="hd-deva">स्मार्ट भारत</span>
+      </div>
+    </div>
+
+    <nav class="nav-tabs" aria-label="Main Navigation">
+      <button class="ntab active" data-sec="home"     onclick="showSection('home')"     id="nt-home">
+        <span class="ni">🏠</span><span class="nl" data-i18n="nav_home">Home</span>
+      </button>
+      <button class="ntab"        data-sec="chat"     onclick="showSection('chat')"     id="nt-chat">
+        <span class="ni">🤖</span><span class="nl" data-i18n="nav_chat">AI Chat</span>
+      </button>
+      <button class="ntab"        data-sec="report"   onclick="showSection('report')"   id="nt-report">
+        <span class="ni">📢</span><span class="nl" data-i18n="nav_report">Report</span>
+      </button>
+      <button class="ntab"        data-sec="services" onclick="showSection('services')" id="nt-services">
+        <span class="ni">🏛️</span><span class="nl" data-i18n="nav_services">Services</span>
+      </button>
+      <button class="ntab"        data-sec="tracker"  onclick="showSection('tracker')"  id="nt-tracker">
+        <span class="ni">📋</span><span class="nl" data-i18n="nav_tracker">Tracker</span>
+      </button>
+    </nav>
+
+    <div class="hd-controls">
+      <div class="lang-sw" role="group" aria-label="Language">
+        <button class="lbtn active" id="lb-en" onclick="setLang('en')">EN</button>
+        <button class="lbtn"        id="lb-hi" onclick="setLang('hi')">हि</button>
+        <button class="lbtn"        id="lb-mr" onclick="setLang('mr')">म</button>
+      </div>
+      </div>
+      <button class="theme-tog" id="theme-tog" onclick="toggleTheme()" aria-label="Toggle Theme" title="Switch Theme">
+        <span id="tog-icon">💚</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════
+       HOME SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="sec-home" class="sec active">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="orbs" aria-hidden="true">
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"></div>
+      </div>
+      <div class="hero-inner">
+        <div class="hero-badge">
+          <span>🇮🇳</span><span>PromptWars × Devengers Hackathon</span>
+        </div>
+        <h1 class="hero-h1">
+          <span data-i18n="hero_l1">Your AI-Powered</span><br>
+          <span class="grad-text" data-i18n="hero_l2">Civic Companion</span>
+        </h1>
+        <p class="hero-sub" data-i18n="hero_sub">
+          Access government services, report public issues, and get instant AI assistance in Hindi, Marathi & English
+        </p>
+        <div class="hero-btns">
+          <button class="btn-p" onclick="showSection('chat')">
+            <span>🤖</span><span data-i18n="h_btn_chat">Ask AI Companion</span>
+          </button>
+          <button class="btn-s" onclick="showSection('report')">
+            <span>📢</span><span data-i18n="h_btn_report">Report an Issue</span>
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><span class="hstat-n">1000+</span><span class="hstat-l" data-i18n="st_schemes">Govt Schemes</span></div>
+          <div class="hstat-div"></div>
+          <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l" data-i18n="st_langs">Languages</span></div>
+          <div class="hstat-div"></div>
+          <div class="hstat"><span class="hstat-n">24/7</span><span class="hstat-l" data-i18n="st_support">AI Support</span></div>
+          <div class="hstat-div"></div>
+          <div class="hstat"><span class="hstat-n">28+</span><span class="hstat-l" data-i18n="st_states">States</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="pg">
+      <div class="sec-head">
+        <h2 data-i18n="feat_h">What Can Smart Bharat Do?</h2>
+        <p data-i18n="feat_sub">Your complete civic digital companion</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card" onclick="showSection('chat')" tabindex="0" role="button">
+          <span class="feat-ico">🤖</span>
+          <h3 data-i18n="f1t">AI Civic Assistant</h3>
+          <p data-i18n="f1d">Get instant answers about schemes, eligibility & document requirements</p>
+          <span class="feat-arr">→</span>
+        </div>
+        <div class="feat-card" onclick="showSection('report')" tabindex="0" role="button">
+          <span class="feat-ico">📢</span>
+          <h3 data-i18n="f2t">Issue Reporting</h3>
+          <p data-i18n="f2d">Report potholes, water issues, broken lights & track resolution</p>
+          <span class="feat-arr">→</span>
+        </div>
+        <div class="feat-card" onclick="showSection('services')" tabindex="0" role="button">
+          <span class="feat-ico">🏛️</span>
+          <h3 data-i18n="f3t">Services Directory</h3>
+          <p data-i18n="f3d">Find all government services with AI-guided document checklists</p>
+          <span class="feat-arr">→</span>
+        </div>
+        <div class="feat-card" onclick="showSection('tracker')" tabindex="0" role="button">
+          <span class="feat-ico">📋</span>
+          <h3 data-i18n="f4t">Complaint Tracker</h3>
+          <p data-i18n="f4d">Monitor complaints and get real-time status updates</p>
+          <span class="feat-arr">→</span>
+        </div>
+        <div class="feat-card" tabindex="0">
+          <span class="feat-ico">🌐</span>
+          <h3 data-i18n="f5t">Multilingual</h3>
+          <p data-i18n="f5d">Full support for Hindi, Marathi & English — your language, your choice</p>
+          <span class="feat-arr">→</span>
+        </div>
+        <div class="feat-card" tabindex="0">
+          <span class="feat-ico">📄</span>
+          <h3 data-i18n="f6t">Document Guide</h3>
+          <p data-i18n="f6d">Exact document lists for Aadhaar, PAN, Passport, Ration Card & more</p>
+          <span class="feat-arr">→</span>
+        </div>
+      </div>
+
+      <!-- Quick Ask -->
+      <div class="quick-sec">
+        <h3 class="quick-h" data-i18n="qk_h">⚡ Quick Questions</h3>
+        <div class="quick-chips" id="quick-chips"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       AI CHAT SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="sec-chat" class="sec chat-sec">
+    <div class="pg chat-pg">
+      <div class="chat-wrap glass-card">
+
+        <!-- Chat Header -->
+        <div class="chat-hd">
+          <div class="bot-info">
+            <div class="bot-av">🤖</div>
+            <div>
+              <strong>Smart Bharat AI</strong>
+              <span class="online-dot">● <span data-i18n="c_online">Online</span></span>
+            </div>
+          </div>
+          <button class="clear-btn" onclick="clearChat()" data-i18n="c_clear">Clear Chat</button>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-msgs" id="chat-msgs" role="log" aria-live="polite"></div>
+
+        <!-- Input Bar -->
+        <div class="chat-bar">
+          <button class="voice-btn" id="voice-btn" onclick="startVoice()" title="Voice Input" aria-label="Voice input">🎤</button>
+          <textarea
+            id="chat-in"
+            class="chat-ta"
+            rows="1"
+            onkeydown="handleEnter(event)"
+            oninput="autoGrow(this)"
+            aria-label="Message input"
+          ></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMsg()" aria-label="Send message">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <p class="chat-note" data-i18n="c_note">AI responses are for guidance only. Verify with official government portals.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       REPORT ISSUE SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="sec-report" class="sec">
+    <div class="pg">
+      <div class="sec-head">
+        <h2 data-i18n="rp_h">Report a Public Issue</h2>
+        <p data-i18n="rp_sub">Help improve your city — every complaint counts</p>
+      </div>
+      <div class="report-layout">
+
+        <!-- Form -->
+        <div class="glass-card form-card">
+          <form id="cmp-form" onsubmit="submitComplaint(event)" novalidate>
+            <div class="row2">
+              <div class="field">
+                <label for="f-name" data-i18n="fl_name">Full Name</label>
+                <input type="text" id="f-name" required placeholder="Your full name" />
+              </div>
+              <div class="field">
+                <label for="f-phone" data-i18n="fl_phone">Mobile Number</label>
+                <input type="tel" id="f-phone" required placeholder="10-digit number" maxlength="10" />
+              </div>
+            </div>
+            <div class="row2">
+              <div class="field">
+                <label for="f-cat" data-i18n="fl_cat">Issue Category</label>
+                <select id="f-cat" required>
+                  <option value="">-- Select --</option>
+                  <option>🛣️ Road / Pothole</option>
+                  <option>💧 Water Supply</option>
+                  <option>⚡ Electricity</option>
+                  <option>🗑️ Garbage / Sanitation</option>
+                  <option>💡 Street Light</option>
+                  <option>🌊 Drainage / Sewage</option>
+                  <option>🌳 Fallen Tree</option>
+                  <option>📌 Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-prio" data-i18n="fl_prio">Priority</label>
+                <select id="f-prio">
+                  <option>🟢 Low</option>
+                  <option selected>🟡 Medium</option>
+                  <option>🔴 High / Urgent</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-loc" data-i18n="fl_loc">Location / Address</label>
+              <input type="text" id="f-loc" required placeholder="Street, Area, City, Pin Code" />
+            </div>
+            <div class="field">
+              <label for="f-desc" data-i18n="fl_desc">Description</label>
+              <textarea id="f-desc" rows="4" required placeholder="Describe the issue in detail..."></textarea>
+            </div>
+            <button type="submit" class="btn-p full-w" id="sub-btn">
+              <span>📢</span><span data-i18n="btn_sub">Submit Complaint</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="rp-side">
+          <div class="glass-card info-card">
+            <h3>📊 <span data-i18n="is_h">Issue Statistics</span></h3>
+            <div class="stat3">
+              <div class="s3i"><span class="s3n" id="st-total">0</span><span data-i18n="is_tot">Total</span></div>
+              <div class="s3i"><span class="s3n green-c" id="st-res">0</span><span data-i18n="is_res">Resolved</span></div>
+              <div class="s3i"><span class="s3n amber-c" id="st-pen">0</span><span data-i18n="is_pen">Pending</span></div>
+            </div>
+          </div>
+          <div class="glass-card info-card">
+            <h3>💡 <span data-i18n="tips_h">Reporting Tips</span></h3>
+            <ul class="tips-ul">
+              <li data-i18n="t1">Be specific about the exact location</li>
+              <li data-i18n="t2">Mention a nearby landmark</li>
+              <li data-i18n="t3">Mark High only for safety hazards</li>
+              <li data-i18n="t4">Check tracker before re-reporting</li>
+            </ul>
+          </div>
+          <div class="glass-card info-card hl-card">
+            <h3>📞 <span data-i18n="hl_h">Emergency Helplines</span></h3>
+            <div class="hl-rows">
+              <div class="hl-row"><span>Police</span><strong>100</strong></div>
+              <div class="hl-row"><span>Fire Brigade</span><strong>101</strong></div>
+              <div class="hl-row"><span>Ambulance</span><strong>108</strong></div>
+              <div class="hl-row"><span>Women Helpline</span><strong>1091</strong></div>
+              <div class="hl-row"><span>Disaster Mgmt</span><strong>1078</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       SERVICES SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="sec-services" class="sec">
+    <div class="pg">
+      <div class="sec-head">
+        <h2 data-i18n="sv_h">Government Services</h2>
+        <p data-i18n="sv_sub">Find and access services with AI-guided assistance</p>
+      </div>
+      <div class="search-wrap">
+        <span class="search-ico" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          id="sv-search"
+          class="text-input search-in"
+          oninput="filterSvcs(this.value)"
+          aria-label="Search services"
+        />
+      </div>
+      <div class="cat-row" id="cat-row" role="group" aria-label="Service Categories">
+        <button class="cat-btn active" onclick="filterCat('all',this)" data-i18n="cat_all">All Services</button>
+        <button class="cat-btn" onclick="filterCat('identity',this)">🪪 Identity</button>
+        <button class="cat-btn" onclick="filterCat('welfare',this)">🤝 Welfare</button>
+        <button class="cat-btn" onclick="filterCat('finance',this)">💰 Finance</button>
+        <button class="cat-btn" onclick="filterCat('health',this)">🏥 Health</button>
+        <button class="cat-btn" onclick="filterCat('education',this)">📚 Education</button>
+        <button class="cat-btn" onclick="filterCat('agriculture',this)">🌾 Agriculture</button>
+      </div>
+      <div class="sv-grid" id="sv-grid"></div>
+      <div id="no-svcs" class="empty-state hidden">
+        <div class="empty-ico">😕</div>
+        <p>No services found. Try a different search.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       TRACKER SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="sec-tracker" class="sec">
+    <div class="pg">
+      <div class="sec-head">
+        <h2 data-i18n="tr_h">My Complaints</h2>
+        <p data-i18n="tr_sub">Track the status of your submitted complaints</p>
+      </div>
+      <div id="tr-empty" class="empty-state">
+        <div class="empty-ico">📋</div>
+        <h3 data-i18n="em_t">No Complaints Yet</h3>
+        <p data-i18n="em_s">Go to Report Issue to submit your first complaint</p>
+        <button class="btn-p" onclick="showSection('report')">📢 <span data-i18n="btn_rep">Report an Issue</span></button>
+      </div>
+      <div id="tr-kanban" class="kanban hidden">
+        <div class="k-col">
+          <div class="k-hd sub-hd"><span>📤</span><span data-i18n="k_sub">Submitted</span><span class="k-cnt" id="kc-sub">0</span></div>
+          <div class="k-body" id="k-sub"></div>
+        </div>
+        <div class="k-col">
+          <div class="k-hd rev-hd"><span>🔍</span><span data-i18n="k_rev">Under Review</span><span class="k-cnt" id="kc-rev">0</span></div>
+          <div class="k-body" id="k-rev"></div>
+        </div>
+        <div class="k-col">
+          <div class="k-hd res-hd"><span>✅</span><span data-i18n="k_res">Resolved</span><span class="k-cnt" id="kc-res">0</span></div>
+          <div class="k-body" id="k-res"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="ft-inner">
+      <div class="ft-brand">
+        <span>🇮🇳</span>
+        <div><strong>Smart Bharat</strong><span>AI-Powered Civic Companion</span></div>
+      </div>
+      <p class="ft-credit">Built for <strong>PromptWars × Devengers</strong> Hackathon · Powered by Google Gemini AI</p>
+      <p class="ft-disc">Prototype only. Not affiliated with Government of India. Data from public government portals.</p>
+    </div>
+  </footer>
+
+</div><!-- #main-app -->
+
+<script src="app.js"></script>
+</body>
+</html>
